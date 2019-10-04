@@ -8,12 +8,12 @@ public class JSONObject
 
     private static final char initialCharacter = '{';
 
-    private HashMap<JSONString, JSONElement> members;
+    private HashMap<String, JSONElement> members;
     private boolean parsedSuccessfully;
     private String json;
 
     JSONObject() {
-        members = new HashMap<JSONString, JSONElement>();
+        members = new HashMap<String, JSONElement>();
     }
 
     public boolean atStartOf(String toParse) {
@@ -78,7 +78,7 @@ public class JSONObject
                 return originalJson;
             }
             // Store key and value
-            members.put(nextKey, nextValue);
+            members.put(nextKey.getValue(), nextValue);
             // Strip whitespace
             json = StringManipulation.stripLeadingJSONWhitespace(json);
             // If nextChar = }, done
@@ -158,7 +158,7 @@ public class JSONObject
         return parsedSuccessfully;
     }
 
-    public HashMap<JSONString, JSONElement> getObject() {
+    public HashMap<String, JSONElement> getObject() {
         return members;
     }
 

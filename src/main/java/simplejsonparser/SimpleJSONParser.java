@@ -61,6 +61,7 @@ public class SimpleJSONParser {
         json = parser.parseFrom(json);
         System.out.println(json);
         System.out.println(parser.success());
+        System.out.println(parser.getObject().get("test"));
 
     }
 
