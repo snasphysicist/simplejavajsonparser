@@ -1,5 +1,5 @@
 
-package main.simplejsonparser;
+package simplejsonparser;
 
 import java.util.regex.Pattern;
 

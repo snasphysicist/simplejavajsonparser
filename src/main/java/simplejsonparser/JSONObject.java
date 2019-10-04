@@ -1,20 +1,25 @@
 
-package main.simplejsonparser;
+package simplejsonparser;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
-public class JSONArray
+public class JSONObject
     implements JSONElement {
 
-    private static final char INITIAL_CHARACTER = '[';
-    private JSONElement[] elements;
+    private static final char initialCharacter = '{';
+
+    private HashMap<JSONString, JSONElement> members;
     private boolean parsedSuccessfully;
     private String json;
+
+    JSONObject() {
+        members = new HashMap<JSONString, JSONElement>();
+    }
 
     public boolean atStartOf(String toParse) {
         toParse = StringManipulation.stripLeadingJSONWhitespace(toParse);
         if (toParse.length() > 0) {
-            return toParse.charAt(0) == INITIAL_CHARACTER;
+            return toParse.charAt(0) == initialCharacter;
         } else {
             return false;
         }
@@ -25,14 +30,45 @@ public class JSONArray
 
         json = originalJson;
 
-        LinkedList<JSONElement> parsedElements = new LinkedList<JSONElement>();
+        JSONString nextKey;
         JSONElement nextValue;
+
+        // Remove opening brace, if present
+        json = StringManipulation.stripLeadingJSONWhitespace(json);
+        if (json.startsWith("{")) {
+            json = StringManipulation.removeFirstCharacter(json);
+        } else {
+            parsedSuccessfully = false;
+            return originalJson;
+        }
+
 
         // Until we reach the close brace or run out of characters
         while (
-                json.charAt(0) != ']'
-                        & json.length() > 0
+                json.charAt(0) != '}'
+                & json.length() > 0
         ) {
+            // Strip whitespace
+            json = StringManipulation.stripLeadingJSONWhitespace(json);
+            // Parse a key
+            nextKey = new JSONString();
+            if (nextKey.atStartOf(json)) {
+                json = nextKey.parseFrom(json);
+                // Fail if could not parse
+                if (!nextKey.success()) {
+                    parsedSuccessfully = false;
+                    return originalJson;
+                }
+            }
+            // Strip whitespace
+            json = StringManipulation.stripLeadingJSONWhitespace(json);
+            // Should find a colon
+            if (json.charAt(0) != ':') {
+                parsedSuccessfully = false;
+                return originalJson;
+            }
+            // Move over the colon
+            json = StringManipulation.removeFirstCharacter(json);
             // Strip whitespace
             json = StringManipulation.stripLeadingJSONWhitespace(json);
             // Parse a value
@@ -43,15 +79,13 @@ public class JSONArray
                 return originalJson;
             }
             // Store key and value
-            parsedElements.add(nextValue);
+            members.put(nextKey, nextValue);
             // Strip whitespace
             json = StringManipulation.stripLeadingJSONWhitespace(json);
-            // If nextChar = ], done
-            if (json.charAt(0) == ']') {
-                // Throw away the bracket
+            // If nextChar = }, done
+            if (json.charAt(0) == '}') {
+                // Throw away the brace
                 parsedSuccessfully = true;
-                // Cast LinkedList to array
-                elements = parsedElements.toArray(new JSONElement[]{});
                 return json.substring(1);
             }
             // Else, should find a comma
@@ -66,7 +100,6 @@ public class JSONArray
         parsedSuccessfully = false;
         return originalJson;
     }
-
 
     private JSONElement parseNextValue() {
         JSONElement element;
@@ -126,4 +159,9 @@ public class JSONArray
         return parsedSuccessfully;
     }
 
+    public HashMap<JSONString, JSONElement> getObject() {
+        return members;
+    }
+
 }
+

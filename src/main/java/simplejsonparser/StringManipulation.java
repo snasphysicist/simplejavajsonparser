@@ -1,5 +1,5 @@
 
-package main.simplejsonparser;
+package simplejsonparser;
 
 class StringManipulation {
 
