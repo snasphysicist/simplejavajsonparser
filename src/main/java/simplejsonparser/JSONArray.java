@@ -135,4 +135,8 @@ public class JSONArray
         return parsedSuccessfully;
     }
 
+    public JSONElement[] getElements() {
+        return elements;
+    }
+
 }
