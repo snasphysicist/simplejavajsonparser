@@ -1,5 +1,5 @@
 
-package simplejsonparser;
+package main.simplejsonparser;
 
 public class JSONString
     implements JSONElement {

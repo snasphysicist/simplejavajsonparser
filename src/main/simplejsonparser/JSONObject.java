@@ -1,7 +1,5 @@
 
-package simplejsonparser;
-
-import com.sun.org.apache.bcel.internal.generic.JsrInstruction;
+package main.simplejsonparser;
 
 import java.util.HashMap;
 

@@ -1,5 +1,5 @@
 
-package simplejsonparser;
+package main.simplejsonparser;
 
 import java.util.LinkedList;
 

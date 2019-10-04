@@ -1,5 +1,5 @@
 
-package simplejsonparser;
+package main.simplejsonparser;
 
 public class JSONBoolean
         implements JSONElement {
