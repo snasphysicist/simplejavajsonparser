@@ -42,7 +42,6 @@ public class JSONObject
             return originalJson;
         }
 
-
         // Until we reach the close brace or run out of characters
         while (
                 json.charAt(0) != '}'

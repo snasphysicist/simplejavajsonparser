@@ -28,6 +28,15 @@ public class JSONArray
         LinkedList<JSONElement> parsedElements = new LinkedList<JSONElement>();
         JSONElement nextValue;
 
+        // Remove opening bracket, if present
+        json = StringManipulation.stripLeadingJSONWhitespace(json);
+        if (json.startsWith("[")) {
+            json = StringManipulation.removeFirstCharacter(json);
+        } else {
+            parsedSuccessfully = false;
+            return originalJson;
+        }
+
         // Until we reach the close brace or run out of characters
         while (
                 json.charAt(0) != ']'
