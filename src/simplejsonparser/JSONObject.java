@@ -35,6 +35,16 @@ public class JSONObject
         JSONString nextKey;
         JSONElement nextValue;
 
+        // Remove opening brace, if present
+        json = StringManipulation.stripLeadingJSONWhitespace(json);
+        if (json.startsWith("{")) {
+            json = StringManipulation.removeFirstCharacter(json);
+        } else {
+            parsedSuccessfully = false;
+            return originalJson;
+        }
+
+
         // Until we reach the close brace or run out of characters
         while (
                 json.charAt(0) != '}'
