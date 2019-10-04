@@ -49,7 +49,7 @@ public class JSONNumber
             } else {
                 value = json.substring(0,i);
                 parsedSuccessfully = true;
-                return json.substring(i+1);
+                return json.substring(i);
             }
         }
     }
