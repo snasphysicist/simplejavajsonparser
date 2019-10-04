@@ -61,7 +61,24 @@ public class SimpleJSONParser {
         json = parser.parseFrom(json);
         System.out.println(json);
         System.out.println(parser.success());
-        System.out.println(parser.getObject().get("test"));
+        JSONArray parsed = (JSONArray) parser.getObject().get("test");
+        JSONElement[] values = parsed.getElements();
+        System.out.println(values.length);
+
+        System.out.println("OBJECT -> ARRAY -> OBJECT");
+        json = "{\"test\":[{\"test2\":12},{\"test3\":\"string\"}]}";
+        parser = new JSONObject();
+        json = parser.parseFrom(json);
+        System.out.println(json);
+        System.out.println(parser.success());
+        parsed = (JSONArray) parser.getObject().get("test");
+        values = parsed.getElements();
+        System.out.println(values.length);
+        for (JSONElement value : values) {
+            System.out.println(value instanceof JSONObject);
+            System.out.println(((JSONObject) value).getObject().get("test2"));
+            System.out.println(((JSONObject) value).getObject().get("test3"));
+        }
 
     }
 
