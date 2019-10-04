@@ -45,6 +45,7 @@ public class JSONString
                 return json;
             } else {
                 value = json.substring(1, i); // Lose the quotation marks
+                parsedSuccessfully = true;
                 return json.substring(i+1);
             }
         }
