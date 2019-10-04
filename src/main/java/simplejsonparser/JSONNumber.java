@@ -47,7 +47,7 @@ public class JSONNumber
                 parsedSuccessfully = false;
                 return json;
             } else {
-                value = json.substring(1, i); // Lose the quotation marks
+                value = json.substring(0,i);
                 parsedSuccessfully = true;
                 return json.substring(i+1);
             }
