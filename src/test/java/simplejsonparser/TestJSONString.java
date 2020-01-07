@@ -1,0 +1,13 @@
+
+package simplejsonparser;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class TestJSONString {
+
+    @Test
+    void givenTextBetweenQuotationMarksShouldParseSuccessfully() {
+        
+    }
+}
