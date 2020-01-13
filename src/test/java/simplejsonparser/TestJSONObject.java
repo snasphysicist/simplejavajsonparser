@@ -88,4 +88,22 @@ public class TestJSONObject {
         assertEquals(BOOLEAN_VALUE, value);
     }
 
+    @Test
+    void givenValidJSONWithNullValueShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "{\"%s\":%s}",
+                KEY,
+                NULL_VALUE
+        );
+        JSONObject jsonObject = new JSONObject();
+        String remainder = jsonObject.parseFrom(jsonString);
+        assertEquals("", remainder);
+        assertTrue(jsonObject.success());
+        HashMap<String, JSONElement> parsed = jsonObject.getObject();
+        assertNotNull(parsed.get(KEY));
+        assertTrue(parsed.get(KEY) instanceof JSONNull);
+        Object value = ((JSONNull) parsed.get(KEY)).getValue();
+        assertEquals(NULL_VALUE, value);
+    }
+
 }
