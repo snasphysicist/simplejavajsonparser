@@ -21,4 +21,35 @@ class TestJSONString {
         assertEquals(VALUE, jsonString.getValue());
     }
 
+    @Test
+    void givenTextBetweenIncorrectQuotationMarksShouldNotParseSuccessfully() {
+        String[] jsonStrings = new String[] {
+                String.format(
+                        "%s\"",
+                        VALUE
+                ),
+                String.format(
+                        "\"%s",
+                        VALUE
+                ),
+                String.format(
+                        "\"\"%s\"",
+                        VALUE
+                ),
+                String.format(
+                        "\"%s\"\"",
+                        VALUE
+                ),
+                String.format(
+                        "'%s'",
+                        VALUE
+                ),
+        };
+        for (String jsonString : jsonStrings) {
+            JSONString parsed = new JSONString();
+            parsed.parseFrom(jsonString);
+            assertFalse(parsed.success());
+        }
+    }
+
 }
