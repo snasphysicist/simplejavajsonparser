@@ -10,7 +10,7 @@ class TestJSONObject {
 
     private static final String KEY = "key";
 
-    private static final String STRING_VALUE = "Test string";
+    private static final String STRING_VALUE = "Test\t\n\r string";
     private static final Integer INTEGER_VALUE = 19;
     private static final Double DOUBLE_VALUE = 43.383543;
     private static final Boolean BOOLEAN_VALUE = false;
