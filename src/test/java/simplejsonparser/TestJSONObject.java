@@ -70,4 +70,22 @@ public class TestJSONObject {
         assertEquals(DOUBLE_VALUE, value);
     }
 
+    @Test
+    void givenValidJSONWithBooleanValueShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "{\"%s\":%b}",
+                KEY,
+                BOOLEAN_VALUE
+        );
+        JSONObject jsonObject = new JSONObject();
+        String remainder = jsonObject.parseFrom(jsonString);
+        assertEquals("", remainder);
+        assertTrue(jsonObject.success());
+        HashMap<String, JSONElement> parsed = jsonObject.getObject();
+        assertNotNull(parsed.get(KEY));
+        assertTrue(parsed.get(KEY) instanceof JSONBoolean);
+        Boolean value = ((JSONBoolean) parsed.get(KEY)).getValue();
+        assertEquals(BOOLEAN_VALUE, value);
+    }
+
 }
