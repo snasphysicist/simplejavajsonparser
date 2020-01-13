@@ -106,4 +106,22 @@ class TestJSONObject {
         assertEquals(NULL_VALUE, value);
     }
 
+    @Test
+    void givenValidJSONWithWhitespacePaddingShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "  {\t\"%s\"\n  : \r\n   \"%s\" }   \t\t\n",
+                KEY,
+                STRING_VALUE
+        );
+        JSONObject jsonObject = new JSONObject();
+        String remainder = jsonObject.parseFrom(jsonString);
+        assertEquals("   \t\t\n", remainder);
+        assertTrue(jsonObject.success());
+        HashMap<String, JSONElement> parsed = jsonObject.getObject();
+        assertNotNull(parsed.get(KEY));
+        assertTrue(parsed.get(KEY) instanceof JSONString);
+        String value = ((JSONString) parsed.get(KEY)).getValue();
+        assertEquals(STRING_VALUE, value);
+    }
+
 }
