@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestJSONObject {
+class TestJSONObject {
 
     private static final String KEY = "key";
 
