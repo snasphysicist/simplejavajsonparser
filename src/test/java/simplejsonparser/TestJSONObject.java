@@ -124,4 +124,35 @@ class TestJSONObject {
         assertEquals(STRING_VALUE, value);
     }
 
+    @Test
+    void givenInvalidJSONKeyWithImbalancedStringQuotesShouldNotParseSuccessfully() {
+        String[] jsonStrings = new String[]{
+                String.format(
+                        "{\"%s:\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{%s\":\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"%s\"\":\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"\"%s\":\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                )
+        };
+        for (String jsonString : jsonStrings) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.parseFrom(jsonString);
+            assertFalse(jsonObject.success());
+        }
+    }
+
 }
