@@ -33,17 +33,9 @@ class TestJSONString {
                         VALUE
                 ),
                 String.format(
-                        "\"\"%s\"",
-                        VALUE
-                ),
-                String.format(
-                        "\"%s\"\"",
-                        VALUE
-                ),
-                String.format(
                         "'%s'",
                         VALUE
-                ),
+                )
         };
         for (String jsonString : jsonStrings) {
             JSONString parsed = new JSONString();
