@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class JSONObject
     implements JSONElement {
 
-    private static final char initialCharacter = '{';
+    private static final char INITIAL_CHARACTER = '{';
 
     private HashMap<String, JSONElement> members;
     private boolean parsedSuccessfully;
@@ -19,7 +19,7 @@ public class JSONObject
     public boolean atStartOf(String toParse) {
         toParse = StringManipulation.stripLeadingJSONWhitespace(toParse);
         if (toParse.length() > 0) {
-            return toParse.charAt(0) == initialCharacter;
+            return toParse.charAt(0) == INITIAL_CHARACTER;
         } else {
             return false;
         }
