@@ -52,4 +52,22 @@ public class TestJSONObject {
         assertEquals(INTEGER_VALUE, value);
     }
 
+    @Test
+    void givenValidJSONWithDoubleValueShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "{\"%s\":%.06f}",
+                KEY,
+                DOUBLE_VALUE
+        );
+        JSONObject jsonObject = new JSONObject();
+        String remainder = jsonObject.parseFrom(jsonString);
+        assertEquals("", remainder);
+        assertTrue(jsonObject.success());
+        HashMap<String, JSONElement> parsed = jsonObject.getObject();
+        assertNotNull(parsed.get(KEY));
+        assertTrue(parsed.get(KEY) instanceof JSONNumber);
+        Double value = ((JSONNumber) parsed.get(KEY)).castToDouble();
+        assertEquals(DOUBLE_VALUE, value);
+    }
+
 }
