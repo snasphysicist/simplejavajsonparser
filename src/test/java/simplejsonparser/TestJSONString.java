@@ -13,4 +13,5 @@ class TestJSONString {
         assertTrue(jsonString.success());
         assertEquals("Test string", jsonString.getValue());
     }
+
 }
