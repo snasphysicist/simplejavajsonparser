@@ -17,7 +17,7 @@ public class TestJSONObject {
     private static final Object NULL_VALUE = null;
 
     @Test
-    public void givenValidJSONWithStringValueShouldParseSuccessfully() {
+    void givenValidJSONWithStringValueShouldParseSuccessfully() {
         String jsonString = String.format(
                 "{\"%s\":\"%s\"}",
                 KEY,
@@ -35,7 +35,7 @@ public class TestJSONObject {
     }
 
     @Test
-    public void givenValidJSONWithIntegerValueShouldParseSuccessfully() {
+    void givenValidJSONWithIntegerValueShouldParseSuccessfully() {
         String jsonString = String.format(
                 "{\"%s\":%d}",
                 KEY,
