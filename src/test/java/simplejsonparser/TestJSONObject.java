@@ -125,8 +125,13 @@ class TestJSONObject {
     }
 
     @Test
-    void givenInvalidJSONKeyWithImbalancedStringQuotesShouldNotParseSuccessfully() {
+    void givenInvalidJSONKeyWithIncorrectQuotesShouldNotParseSuccessfully() {
         String[] jsonStrings = new String[]{
+                String.format(
+                        "{%s:\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
                 String.format(
                         "{\"%s:\"%s\"}",
                         KEY,
