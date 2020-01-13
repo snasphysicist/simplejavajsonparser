@@ -8,30 +8,46 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestJSONObject {
 
+    private static final String KEY = "key";
+
+    private static final String STRING_VALUE = "Test string";
+    private static final Integer INTEGER_VALUE = 19;
+    private static final Double DOUBLE_VALUE = 43.383543;
+    private static final Boolean BOOLEAN_VALUE = false;
+    private static final Object NULL_VALUE = null;
+
     @Test
     public void givenValidJSONWithStringValueShouldParseSuccessfully() {
-        String jsonString = "{\"key\":\"Test string\"}";
+        String jsonString = String.format(
+                "{\"%s\":\"%s\"}",
+                KEY,
+                STRING_VALUE
+        );
         JSONObject jsonObject = new JSONObject();
         String remainder = jsonObject.parseFrom(jsonString);
         assertEquals("", remainder);
         assertTrue(jsonObject.success());
         HashMap<String, JSONElement> parsed = jsonObject.getObject();
-        assertNotNull(parsed.get("key"));
-        assertTrue(parsed.get("key") instanceof JSONString);
+        assertNotNull(parsed.get(KEY));
+        assertTrue(parsed.get(KEY) instanceof JSONString);
     }
 
     @Test
     public void givenValidJSONWithIntegerValueShouldParseSuccessfully() {
-        String jsonString = "{\"key\":1}";
+        String jsonString = String.format(
+                "{\"%s\":%d}",
+                KEY,
+                INTEGER_VALUE
+        );
         JSONObject jsonObject = new JSONObject();
         String remainder = jsonObject.parseFrom(jsonString);
         assertEquals("", remainder);
         assertTrue(jsonObject.success());
         HashMap<String, JSONElement> parsed = jsonObject.getObject();
-        assertNotNull(parsed.get("key"));
-        assertTrue(parsed.get("key") instanceof JSONNumber);
-        Integer value = ((JSONNumber) parsed.get("key")).castToInteger();
-        assertEquals(1, value);
+        assertNotNull(parsed.get(KEY));
+        assertTrue(parsed.get(KEY) instanceof JSONNumber);
+        Integer value = ((JSONNumber) parsed.get(KEY)).castToInteger();
+        assertEquals(INTEGER_VALUE, value);
     }
 
 }
