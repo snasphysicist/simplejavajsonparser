@@ -29,7 +29,7 @@ public class JSONString
             int i = 1;
             while (
                     i < json.length()
-                    & (
+                    && (
                             json.charAt(i) != '"'
                             || (
                                     json.charAt(i) == '"'
