@@ -30,6 +30,8 @@ public class TestJSONObject {
         HashMap<String, JSONElement> parsed = jsonObject.getObject();
         assertNotNull(parsed.get(KEY));
         assertTrue(parsed.get(KEY) instanceof JSONString);
+        String value = ((JSONString) parsed.get(KEY)).getValue();
+        assertEquals(STRING_VALUE, value);
     }
 
     @Test
