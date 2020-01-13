@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestJSONObject {
 
     @Test
-    public void givenValidJSONWithStringShouldParseSuccessfully() {
+    public void givenValidJSONWithStringValueShouldParseSuccessfully() {
         String jsonString = "{\"key\":\"Test string\"}";
         JSONObject jsonObject = new JSONObject();
         String remainder = jsonObject.parseFrom(jsonString);
