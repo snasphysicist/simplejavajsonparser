@@ -34,4 +34,25 @@ class TestJSONBoolean {
         assertTrue(parsed.getValue());
     }
 
+    @Test
+    void givenBooleansWithIncorrectCapitalisationShouldNotParseSuccessfully() {
+        String[] incorrectCases = new String[]{
+                "TRUE",
+                "FALSE",
+                "True",
+                "False",
+                "TrUe",
+                "FaLsE"
+        };
+        for (String incorrect : incorrectCases) {
+            String jsonString = String.format(
+                    "%s}",
+                    incorrect
+            );
+            JSONBoolean parser = new JSONBoolean();
+            parser.parseFrom(jsonString);
+            assertFalse(parser.success());
+        }
+    }
+
 }
