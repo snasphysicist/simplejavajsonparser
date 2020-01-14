@@ -24,6 +24,7 @@ public class JSONNull
             parsedSuccessfully = false;
             return json;
         } else {
+            json = StringManipulation.stripLeadingJSONWhitespace(json);
             if (json.startsWith("null")) {
                 value = null;
                 parsedSuccessfully = true;
