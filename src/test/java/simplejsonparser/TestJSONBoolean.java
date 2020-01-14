@@ -16,4 +16,13 @@ class TestJSONBoolean {
         assertTrue(parsed.getValue());
     }
 
+    @Test
+    void givenFalseBooleanAtStartOfJSONStringShouldParseSuccessfully() {
+        String jsonString = "false}";
+        JSONBoolean parsed = new JSONBoolean();
+        parsed.parseFrom(jsonString);
+        assertTrue(parsed.success());
+        assertFalse(parsed.getValue());
+    }
+
 }
