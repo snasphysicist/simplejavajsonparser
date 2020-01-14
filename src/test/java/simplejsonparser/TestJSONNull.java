@@ -41,5 +41,5 @@ class TestJSONNull {
             assertFalse(jsonNull.success());
         }
     }
-    
+
 }
