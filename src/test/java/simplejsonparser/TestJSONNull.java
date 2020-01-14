@@ -15,4 +15,13 @@ class TestJSONNull {
         assertNull(jsonNull.getValue());
     }
 
+    @Test
+    void givenWhitespaceThenNullAtStartOfJSONStringShouldParseSuccesfully() {
+        String jsonString = "  \t \r  \n\n null \n\n \r\t }  ";
+        JSONNull jsonNull = new JSONNull();
+        jsonNull.parseFrom(jsonString);
+        assertTrue(jsonNull.success());
+        assertNull(jsonNull.getValue());
+    }
+
 }
