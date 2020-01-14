@@ -27,6 +27,7 @@ public class JSONBoolean
             parsedSuccessfully = false;
             return json;
         } else {
+            json = StringManipulation.stripLeadingJSONWhitespace(json);
             if (json.startsWith("true")) {
                 value = true;
                 parsedSuccessfully = true;
