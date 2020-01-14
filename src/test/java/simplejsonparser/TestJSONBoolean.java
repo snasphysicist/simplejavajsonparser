@@ -25,4 +25,13 @@ class TestJSONBoolean {
         assertFalse(parsed.getValue());
     }
 
+    @Test
+    void givenWhitespaceThenBooleanAtStartOfJSONStringShouldParseSuccessfully() {
+        String jsonString = "  \t  \n  \r    true   }";
+        JSONBoolean parsed = new JSONBoolean();
+        parsed.parseFrom(jsonString);
+        assertTrue(parsed.success());
+        assertTrue(parsed.getValue());
+    }
+
 }
