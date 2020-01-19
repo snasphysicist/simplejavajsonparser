@@ -40,4 +40,19 @@ class TestJSONNumber {
         assertEquals(NEGATIVE_INTEGER, parser.castToInteger());
     }
 
+    @Test
+    void givenPositiveFloatAtStartOfJSONStringShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "%.4f}",
+                POSITIVE_DOUBLE
+        );
+        JSONNumber parser = new JSONNumber();
+        String remainder = parser.parseFrom(jsonString);
+        assertTrue(parser.success());
+        assertEquals("}", remainder);
+        assertFalse(parser.isInteger());
+        assertTrue(parser.isDouble());
+        assertEquals(POSITIVE_DOUBLE, parser.castToDouble());
+    }
+
 }
