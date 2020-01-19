@@ -47,7 +47,9 @@ public class JSONNumber
                 parsedSuccessfully = false;
                 return json;
             } else {
-                value = json.substring(0,i);
+                value = StringManipulation.stripTrailingJSONWhitespace(
+                        json.substring(0,i)
+                );
                 parsedSuccessfully = true;
                 return json.substring(i);
             }

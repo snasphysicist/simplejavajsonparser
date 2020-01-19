@@ -16,6 +16,11 @@ class TestJSONObject {
     private static final Boolean BOOLEAN_VALUE = false;
     private static final Object NULL_VALUE = null;
 
+    /*
+     * Basic sanity checks for
+     * json containing each type
+     */
+
     @Test
     void givenValidJSONWithStringValueShouldParseSuccessfully() {
         String jsonString = String.format(
@@ -106,6 +111,11 @@ class TestJSONObject {
         assertEquals(NULL_VALUE, value);
     }
 
+    /*
+     * Behaviours with regard to json syntax
+     * e.g. whitespace, quoting, brackets
+     */
+
     @Test
     void givenValidJSONWithWhitespacePaddingShouldParseSuccessfully() {
         String jsonString = String.format(
@@ -149,6 +159,57 @@ class TestJSONObject {
                 ),
                 String.format(
                         "{\"\"%s\":\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                )
+        };
+        for (String jsonString : jsonStrings) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.parseFrom(jsonString);
+            assertFalse(jsonObject.success());
+        }
+    }
+
+    @Test
+    void givenInvalidJSONStringWithImbalancedBracketsShouldNotParseSuccessfully() {
+        String[] jsonStrings = new String[]{
+                String.format(
+                        "\"%s\":\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"%s\":\"%s\"",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"%s\"}:\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"%s\":}\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"%s\"{:\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{\"%s\":{\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{{\"%s\":\"%s\"}",
+                        KEY,
+                        STRING_VALUE
+                ),
+                String.format(
+                        "{}\"%s\":\"%s\"}",
                         KEY,
                         STRING_VALUE
                 )
