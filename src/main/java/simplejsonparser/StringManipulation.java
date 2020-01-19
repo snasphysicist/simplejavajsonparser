@@ -9,9 +9,24 @@ class StringManipulation {
         String stripped = from;
         while (
                 stripped.length() > 0
-                & isJsonWhitespace(stripped.charAt(0))
+                && isJsonWhitespace(stripped.charAt(0))
         ) {
             stripped = removeFirstCharacter(stripped);
+        }
+        return stripped;
+    }
+
+    static String stripTrailingJSONWhitespace(String from) {
+        String stripped = from;
+        while (
+                stripped.length() > 0
+                        && isJsonWhitespace(
+                                stripped.charAt(
+                                        stripped.length() - 1
+                                )
+                        )
+        ) {
+            stripped = removeLastCharacter(stripped);
         }
         return stripped;
     }
@@ -27,6 +42,10 @@ class StringManipulation {
 
     static String removeFirstCharacter(String from) {
         return from.substring(1);
+    }
+
+    static String removeLastCharacter(String from) {
+        return from.substring(0, from.length() - 1);
     }
 
 }
