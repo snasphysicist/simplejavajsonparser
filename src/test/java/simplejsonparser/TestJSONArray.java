@@ -60,4 +60,75 @@ class TestJSONArray {
         assertEquals(whitespaceString, ((JSONString) elements[1]).getValue());
         assertEquals(BOOLEAN_VALUE, ((JSONBoolean) elements[2]).getValue());
     }
+
+    void givenArrayWithImproperSyntaxAtStartOfJSONStringShouldNotParseSuccessfully() {
+        String[] jsonStrings = new String[] {
+                String.format(
+                        "%d,\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d,\"%s\",%b}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d,]\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d[,\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d,[\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d,,\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[%d,\"%s\",%b,]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        ",[%d,\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                ),
+                String.format(
+                        "[[%d,\"%s\",%b]}",
+                        INTEGER_VALUE,
+                        STRING_VALUE,
+                        BOOLEAN_VALUE
+                )
+        };
+        for (String incorrect : jsonStrings) {
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.parseFrom(incorrect);
+            assertFalse(jsonArray.success());
+        }
+    }
+
 }
