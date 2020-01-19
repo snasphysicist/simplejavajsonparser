@@ -194,11 +194,6 @@ class TestJSONObject {
                         STRING_VALUE
                 ),
                 String.format(
-                        "{\"%s\":\"%s\"}}",
-                        KEY,
-                        STRING_VALUE
-                ),
-                String.format(
                         "{\"%s\"{:\"%s\"}",
                         KEY,
                         STRING_VALUE
