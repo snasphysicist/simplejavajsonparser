@@ -13,7 +13,7 @@ class TestJSONNumber {
     private static final Double NEGATIVE_DOUBLE = -7620.2947;
 
     @Test
-    void givenIntegerAtStartOfJSONStringShouldParseSuccessfully() {
+    void givenPositiveIntegerAtStartOfJSONStringShouldParseSuccessfully() {
         String jsonString = String.format(
                 "%d}",
                 POSITIVE_INTEGER
@@ -24,6 +24,20 @@ class TestJSONNumber {
         assertEquals("}", remainder);
         assertTrue(parser.isInteger());
         assertEquals(POSITIVE_INTEGER, parser.castToInteger());
+    }
+
+    @Test
+    void givenNegativeIntegerAtStartOfJSONStringShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "%d}",
+                NEGATIVE_INTEGER
+        );
+        JSONNumber parser = new JSONNumber();
+        String remainder = parser.parseFrom(jsonString);
+        assertTrue(parser.success());
+        assertEquals("}", remainder);
+        assertTrue(parser.isInteger());
+        assertEquals(NEGATIVE_INTEGER, parser.castToInteger());
     }
 
 }
