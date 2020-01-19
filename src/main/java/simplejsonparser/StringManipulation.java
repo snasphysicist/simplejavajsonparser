@@ -9,7 +9,7 @@ class StringManipulation {
         String stripped = from;
         while (
                 stripped.length() > 0
-                & isJsonWhitespace(stripped.charAt(0))
+                && isJsonWhitespace(stripped.charAt(0))
         ) {
             stripped = removeFirstCharacter(stripped);
         }
