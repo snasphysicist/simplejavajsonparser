@@ -81,6 +81,11 @@ public class JSONObject
             members.put(nextKey.getValue(), nextValue);
             // Strip whitespace
             json = StringManipulation.stripLeadingJSONWhitespace(json);
+            // If string empty, fail (no closing brace)
+            if (json.length() == 0) {
+                parsedSuccessfully = false;
+                return originalJson;
+            }
             // If nextChar = }, done
             if (json.charAt(0) == '}') {
                 // Throw away the brace
