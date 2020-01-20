@@ -55,7 +55,6 @@ class TestJSONArray {
         assertTrue(elements[0] instanceof JSONNumber);
         assertTrue(elements[1] instanceof JSONString);
         assertTrue(elements[2] instanceof JSONBoolean);
-        System.out.println(elements[0]);
         assertEquals(INTEGER_VALUE, ((JSONNumber) elements[0]).castToInteger());
         assertEquals(whitespaceString, ((JSONString) elements[1]).getValue());
         assertEquals(BOOLEAN_VALUE, ((JSONBoolean) elements[2]).getValue());
@@ -126,6 +125,7 @@ class TestJSONArray {
                 )
         };
         for (String incorrect : jsonStrings) {
+            System.out.println(incorrect);
             JSONArray jsonArray = new JSONArray();
             jsonArray.parseFrom(incorrect);
             assertFalse(jsonArray.success());
