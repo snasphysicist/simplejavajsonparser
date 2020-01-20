@@ -9,10 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestJSONObject {
 
     private static final String KEY = "key";
+    private static final String NESTED_KEY = "nestedKey";
 
     private static final String STRING_VALUE = "Test\t\n\r string";
     private static final Integer INTEGER_VALUE = 19;
-    private static final Double DOUBLE_VALUE = 43.383543;
+    private static final Double DOUBLE_VALUE = 43.3843;
     private static final Boolean BOOLEAN_VALUE = false;
     private static final Object NULL_VALUE = null;
 
@@ -219,6 +220,60 @@ class TestJSONObject {
             jsonObject.parseFrom(jsonString);
             assertFalse(jsonObject.success());
         }
+    }
+
+    @Test
+    void givenJsonStringWithNestedObjectsShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "{\"%s\":{\"%s\":%d}}",
+                KEY,
+                NESTED_KEY,
+                INTEGER_VALUE
+        );
+        JSONObject outer = new JSONObject();
+        outer.parseFrom(jsonString);
+        assertTrue(outer.success());
+        JSONElement inner = outer.getObject().get(KEY);
+        assertNotNull(inner);
+        assertTrue(inner instanceof JSONObject);
+        JSONElement value = ((JSONObject) inner).getObject().get(NESTED_KEY);
+        assertNotNull(value);
+        assertTrue(value instanceof JSONNumber);
+        assertEquals(INTEGER_VALUE, ((JSONNumber) value).castToInteger());
+    }
+
+    @Test
+    void givenJsonStringWithNestedArraysShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "{\"%s\":[[\"%s\",%b],[%.4f, %s]]}",
+                KEY,
+                STRING_VALUE,
+                BOOLEAN_VALUE,
+                DOUBLE_VALUE,
+                NULL_VALUE
+        );
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.parseFrom(jsonString);
+        assertTrue(jsonObject.success());
+        JSONElement outerValue = jsonObject.getObject().get(KEY);
+        assertNotNull(outerValue);
+        assertTrue(outerValue instanceof JSONArray);
+        JSONElement[] elements = ((JSONArray) outerValue).getElements();
+        for (JSONElement element : elements) {
+            assertTrue(element instanceof JSONArray);
+        }
+        JSONElement[] innerElements1 = ((JSONArray) elements[0]).getElements();
+        JSONElement[] innerElements2 = ((JSONArray) elements[1]).getElements();
+        assertNotNull(innerElements1);
+        assertNotNull(innerElements2);
+        assertTrue(innerElements1[0] instanceof JSONString);
+        assertTrue(innerElements1[1] instanceof JSONBoolean);
+        assertTrue(innerElements2[0] instanceof JSONNumber);
+        assertTrue(innerElements2[1] instanceof JSONNull);
+        assertEquals(STRING_VALUE, ((JSONString) innerElements1[0]).getValue());
+        assertEquals(BOOLEAN_VALUE, ((JSONBoolean) innerElements1[1]).getValue());
+        assertEquals(DOUBLE_VALUE, ((JSONNumber) innerElements2[0]).castToDouble());
+        assertEquals(NULL_VALUE, ((JSONNull) innerElements2[1]).getValue());
     }
 
 }

@@ -50,8 +50,17 @@ public class JSONNumber
                 value = StringManipulation.stripTrailingJSONWhitespace(
                         json.substring(0,i)
                 );
-                parsedSuccessfully = true;
-                return json.substring(i);
+                // Check that the value is valid
+                if (
+                        (castToInteger() != null)
+                        || (castToDouble() != null)
+                ) {
+                    parsedSuccessfully = true;
+                    return json.substring(i);
+                } else {
+                    parsedSuccessfully = false;
+                    return json;
+                }
             }
         }
     }
