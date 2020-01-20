@@ -61,6 +61,7 @@ class TestJSONArray {
         assertEquals(BOOLEAN_VALUE, ((JSONBoolean) elements[2]).getValue());
     }
 
+    @Test
     void givenArrayWithImproperSyntaxAtStartOfJSONStringShouldNotParseSuccessfully() {
         String[] jsonStrings = new String[] {
                 String.format(
