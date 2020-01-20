@@ -125,7 +125,6 @@ class TestJSONArray {
                 )
         };
         for (String incorrect : jsonStrings) {
-            System.out.println(incorrect);
             JSONArray jsonArray = new JSONArray();
             jsonArray.parseFrom(incorrect);
             assertFalse(jsonArray.success());
