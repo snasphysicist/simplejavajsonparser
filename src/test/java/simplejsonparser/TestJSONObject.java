@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestJSONObject {
 
     private static final String KEY = "key";
+    private static final String NESTED_KEY = "nestedKey";
 
     private static final String STRING_VALUE = "Test\t\n\r string";
     private static final Integer INTEGER_VALUE = 19;
@@ -219,6 +220,26 @@ class TestJSONObject {
             jsonObject.parseFrom(jsonString);
             assertFalse(jsonObject.success());
         }
+    }
+
+    @Test
+    void givenJsonStringWithNestedObjectsShouldParseSuccessfully() {
+        String jsonString = String.format(
+                "{\"%s\":{\"%s\":%d}}",
+                KEY,
+                NESTED_KEY,
+                INTEGER_VALUE
+        );
+        JSONObject outer = new JSONObject();
+        outer.parseFrom(jsonString);
+        assertTrue(outer.success());
+        JSONElement inner = outer.getObject().get(KEY);
+        assertNotNull(inner);
+        assertTrue(inner instanceof JSONObject);
+        JSONElement value = ((JSONObject) inner).getObject().get(NESTED_KEY);
+        assertNotNull(value);
+        assertTrue(value instanceof JSONNumber);
+        assertEquals(INTEGER_VALUE, ((JSONNumber) value).castToInteger());
     }
 
 }
